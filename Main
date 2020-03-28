@@ -1,0 +1,70 @@
+import java.util.*;
+
+public class Quera {
+    public static void main(String[] args) {
+
+        Scanner input = new Scanner(System.in);
+        Map<Integer, Double> map;
+        String[] expression;
+        double factor;
+        int power;
+        StringBuilder output = null;
+        System.out.println("What is the degree of derivation desired?");
+        int Degree;
+        Degree = Integer.parseInt(input.nextLine());
+        System.out.println("Please enter the standard expression:");
+        String algebraic_exp;
+        algebraic_exp = input.nextLine();
+
+        for (int degree = 0; degree < Degree; degree++) {
+
+            output = new StringBuilder();
+            algebraic_exp = algebraic_exp.replace("-", "+-");
+            algebraic_exp = algebraic_exp.replace("+", "pl");
+            algebraic_exp = algebraic_exp.replace("^", "po");
+            map = new HashMap<>();
+            expression = algebraic_exp.split("pl");
+
+            for (String value : expression) {
+
+                if (value.equals(value.replace('x', 'q'))) {
+                    continue;
+                } else if (value.charAt(0) == 'x') {
+                    factor = 1;
+                    if (value.length() == 1) {
+                        power = 1;
+                    } else {
+                        power = Integer.parseInt(value.replace("xpo", ""));
+                    }
+                } else {
+                    if (value.charAt(value.length() - 1) == 'x') {
+                        power = 1;
+                        factor = Double.parseDouble(value.replace("x", ""));
+                    } else {
+                        String[] fao = value.split("xpo");
+                        factor = Double.parseDouble(fao[0]);
+                        power = Integer.parseInt(fao[1]);
+                    }
+                }
+                if (map.get(power) == null) {
+                    map.put(power, factor);
+                } else {
+                    double badal = map.get(power) + factor;
+                    map.put(power, badal);
+                }
+            }
+            Set<Integer> set = map.keySet();
+            for (int s : set) {
+                double badal = map.get(s);
+                output.insert(0, (badal * s) + "x^" + (s - 1) + "+");
+            }
+            output.append("null");
+            output = new StringBuilder(output.toString().replace("+-", "-"));
+            output = new StringBuilder(output.toString().replace("x^0", ""));
+            output = new StringBuilder(output.toString().replace("x^1", "x"));
+            output = new StringBuilder(output.toString().replace("+null", ""));
+            algebraic_exp = output.toString();
+        }
+        System.out.println(output);
+    }
+}
