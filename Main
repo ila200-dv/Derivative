@@ -1,6 +1,11 @@
+/*
+writen by : SayedAli Musavi Khoeini
+at the time : 12:55 | 29/3/2020
+ */
+
 import java.util.*;
 
-public class Quera {
+public class Derivative {
     public static void main(String[] args) {
 
         Scanner input = new Scanner(System.in);
